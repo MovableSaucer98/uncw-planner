@@ -2,8 +2,18 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import List, Optional
+from fastapi.middleware.cors import CORSMiddleware    # <-- INSERT #1
 
 app = FastAPI(title="UNCW Planner API (MVP)")
+
+# <-- INSERT #2 (right after app is created)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],   # TEMP: allow all; change to Netlify URL later
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class PlanRequest(BaseModel):
     program_id: str
@@ -20,7 +30,6 @@ def health():
 @app.post("/plan")
 def create_plan(req: PlanRequest):
     # --- SUPER SIMPLE DEMO PLANNER ---
-    # Imagine we have 20 pretend remaining courses:
     pretend_remaining = [
         "ENG 201","CSC 231","CSC 331","CSC 340","CSC 350",
         "MAT 162","STT 215","CSC 432","CSC 442","CSC 450",
@@ -30,7 +39,6 @@ def create_plan(req: PlanRequest):
 
     remaining = [c for c in pretend_remaining if c not in req.completed_courses]
 
-    # Pack courses into future terms up to target credits (assume 3 credits each)
     plan = []
     i = 0
     for t in range(req.terms_to_plan):
