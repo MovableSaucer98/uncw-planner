@@ -1,7 +1,7 @@
 # backend/crud.py
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from .models import Program, ProgramRequirement, Course
+from models import Program, ProgramRequirement, Course
 
 async def get_program_by_program_id(db: AsyncSession, pid: str) -> Program | None:
     res = await db.execute(select(Program).where(Program.program_id == pid))
