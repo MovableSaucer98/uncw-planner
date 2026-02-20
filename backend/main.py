@@ -74,67 +74,6 @@ def health():
 # (TEMP) One-time seed endpoint
 # Call once from /docs after deployment, then remove if you want.
 # -------------------------------
-@app.post("/__admin__/seed")
-async def seed(db: AsyncSession = Depends(get_db)):
-    try:
-        # program
-        prog = Program(
-            program_id="BS-CS-2025",
-            name="B.S. Computer Science",
-            total_credits=120,
-        )
-        db.add(prog)
-        await db.flush()  # get prog.id
-
-        # minimal course set (example credits)
-        seed_courses = [
-            ("CSC 121", "Intro to CS", 3),
-            ("CSC 133", "OOP", 3),
-            ("CSC 231", "Data Structures", 3),
-            ("CSC 331", "Algorithms", 3),
-            ("CSC 340", "Systems", 3),
-            ("CSC 350", "Software Eng", 3),
-            ("MAT 161", "Calc I", 4),
-            ("MAT 162", "Calc II", 4),
-            ("STT 215", "Statistics", 3),
-            ("CSC 432", "Elective 1", 3),
-            ("CSC 442", "Elective 2", 3),
-            ("CSC 450", "Elective 3", 3),
-            ("CSC 485", "Elective 4", 3),
-        ]
-        for code, title, credits in seed_courses:
-            db.add(Course(code=code, title=title, credits=credits))
-
-        # requirements (core + electives)
-        core = [
-            "CSC 121",
-            "CSC 133",
-            "CSC 231",
-            "CSC 331",
-            "CSC 340",
-            "CSC 350",
-            "MAT 161",
-            "MAT 162",
-            "STT 215",
-        ]
-        for c in core:
-            db.add(
-                ProgramRequirement(
-                    program_id_fk=prog.id, course_code=c, kind="core"
-                )
-            )
-        for c in ["CSC 432", "CSC 442", "CSC 450", "CSC 485"]:
-            db.add(
-                ProgramRequirement(
-                    program_id_fk=prog.id, course_code=c, kind="elective"
-                )
-            )
-
-        await db.commit()
-        return {"ok": True}
-    except Exception as e:
-        await db.rollback()
-        return {"ok": False, "error": str(e)}
 
 # -------------------------------
 # Planner
