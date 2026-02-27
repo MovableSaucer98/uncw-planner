@@ -22,8 +22,8 @@ app = FastAPI(title="UNCW Planner API (MVP)")
 # allow_origins=["https://YOUR-SITE-NAME.netlify.app"]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=False,
+    allow_origins=["https://6997aaa477613f372b71ebe8--endearing-souffle-6367b0.netlify.app"],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
