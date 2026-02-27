@@ -18,6 +18,16 @@ from crud import (
 
 app = FastAPI(title="UNCW Planner API (MVP)")
 
+from fastapi import Request
+
+@app.get('/__debug__/headers')
+async def debug_headers(request: Request):
+    return {
+        'received_origin': request.headers.get('origin'),
+        'host': request.headers.get('host'),
+        'x_forwarded_proto': request.headers.get('x-forwarded-proto'),
+    }
+
 # TODO: after testing, lock to your Netlify origin:
 # allow_origins=["https://YOUR-SITE-NAME.netlify.app"]
 app.add_middleware(
