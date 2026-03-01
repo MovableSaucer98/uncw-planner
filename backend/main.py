@@ -1,9 +1,9 @@
 # backend/main.py
-from fastapi import FastAPI, Depends
+from typing import List, Optional, AsyncGenerator
+
+from fastapi import FastAPI, Depends, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import List, Optional
-from contextlib import asynccontextmanager
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -16,43 +16,61 @@ from crud import (
     get_prereq_map,
 )
 
+# ------------------------------------------------------------------------------
+# App
+# ------------------------------------------------------------------------------
 app = FastAPI(title="UNCW Planner API (MVP)")
 
-from fastapi import Request
-
-@app.get('/__debug__/headers')
-async def debug_headers(request: Request):
-    return {
-        'received_origin': request.headers.get('origin'),
-        'host': request.headers.get('host'),
-        'x_forwarded_proto': request.headers.get('x-forwarded-proto'),
-    }
-
-# TODO: after testing, lock to your Netlify origin:
-# allow_origins=["https://YOUR-SITE-NAME.netlify.app"]
+# ------------------------------------------------------------------------------
+# CORS (place immediately after app creation)
+# - Explicitly allow your production Netlify site
+# - Allow local Vite dev
+# - Allow Netlify deploy-preview subdomains via regex
+# ------------------------------------------------------------------------------
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://endearing-souffle-6367b0.netlify.app"],
+    allow_origins=[
+        "https://endearing-souffle-6367b0.netlify.app",  # production (no trailing slash)
+        "http://localhost:5173",                         # Vite dev
+    ],
+    allow_origin_regex=r"https://[a-z0-9-]+--endearing-souffle-6367b0\.netlify\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# If you're now using Alembic, you can comment this out later:
+# ------------------------------------------------------------------------------
+# Debug route (to confirm Origin received by backend)
+# ------------------------------------------------------------------------------
+@app.get("/__debug__/headers")
+async def debug_headers(request: Request):
+    return {
+        "received_origin": request.headers.get("origin"),
+        "host": request.headers.get("host"),
+        "x_forwarded_proto": request.headers.get("x-forwarded-proto"),
+    }
+
+# ------------------------------------------------------------------------------
+# Startup: create tables (OK for MVP; later switch to Alembic migrations)
+# ------------------------------------------------------------------------------
 @app.on_event("startup")
 async def on_startup():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
 
-@asynccontextmanager
-async def get_db():
+# ------------------------------------------------------------------------------
+# DB dependency
+# ------------------------------------------------------------------------------
+async def get_db() -> AsyncGenerator[AsyncSession, None]:
     db = SessionLocal()
     try:
         yield db
     finally:
         await db.aclose()
 
-
+# ------------------------------------------------------------------------------
+# Schemas
+# ------------------------------------------------------------------------------
 class PlanRequest(BaseModel):
     program_id: str
     earned_credits: int
@@ -61,11 +79,12 @@ class PlanRequest(BaseModel):
     terms_to_plan: int = 6
     preferences: Optional[dict] = None
 
-
+# ------------------------------------------------------------------------------
+# Routes
+# ------------------------------------------------------------------------------
 @app.get("/")
 def health():
     return {"ok": True, "message": "UNCW Planner API is alive"}
-
 
 @app.post("/plan")
 async def create_plan(req: PlanRequest, db: AsyncSession = Depends(get_db)):
@@ -100,7 +119,7 @@ async def create_plan(req: PlanRequest, db: AsyncSession = Depends(get_db)):
 
     # 5) Greedy, prereq-aware packing
     plan = []
-    taken = set(completed)  # what the student already has
+    taken = set(completed)       # what the student already has
     remaining_codes = remaining[:]  # copy; we'll mutate by terms
 
     for t in range(1, req.terms_to_plan + 1):
@@ -110,7 +129,7 @@ async def create_plan(req: PlanRequest, db: AsyncSession = Depends(get_db)):
         unscheduled_next = []
 
         # Scan through all remaining courses; pick those eligible & fitting credit cap.
-        # If a course isn't eligible *yet*, keep it for the next pass/term.
+        # If a course isn't eligible yet, keep it for the next pass/term.
         for code in remaining_codes:
             prereqs = prereq_map.get(code, set())
             # eligible only if all prereqs have been taken already
@@ -166,9 +185,7 @@ async def create_plan(req: PlanRequest, db: AsyncSession = Depends(get_db)):
 
     return {"plan": plan}
 
-
 # -------- OPTIONAL: one-time seed of sample prerequisites for testing ----------
-# Call this once from /docs to add some prereqs, then remove it.
 @app.post("/__admin__/seed_prereqs")
 async def seed_prereqs(db: AsyncSession = Depends(get_db)):
     try:
@@ -182,6 +199,7 @@ async def seed_prereqs(db: AsyncSession = Depends(get_db)):
             code_to_id[c.code] = c.id
 
         rows: list[CoursePrereq] = []
+
         def add(course_code: str, prereq_code: str):
             cid = code_to_id.get(course_code)
             if cid:
