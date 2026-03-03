@@ -1,0 +1,15 @@
+---
+import MainLayout from '../layouts/main.astro';
+import PlannerComponent from '../components/Planner';
+---
+
+<MainLayout pageClass="planner-page">
+  <PlannerComponent client:only="react" />
+</MainLayout>
+
+<style>
+  :global(.planner-page) {
+    background: hsl(var(--background));
+  }
+</style>
+

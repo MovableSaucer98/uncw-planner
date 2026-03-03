@@ -1,0 +1,174 @@
+---
+import MainLayout from '../layouts/main.astro';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
+import { Button } from '../components/ui/button';
+import { GraduationCap, Lightbulb, Target, Users } from 'lucide-react';
+import { baseUrl } from '../lib/base-url';
+---
+
+<MainLayout>
+  <div class="min-h-screen bg-gradient-to-b from-background to-muted">
+    <div class="container mx-auto px-6 py-16">
+      <!-- Header -->
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <div class="flex justify-center mb-6">
+          <GraduationCap className="h-16 w-16 text-primary" />
+        </div>
+        <h1 class="text-4xl font-bold mb-4">About Academic Planner</h1>
+        <p class="text-xl text-muted-foreground">
+          Empowering students to take control of their academic journey with AI-powered planning tools
+        </p>
+      </div>
+
+      <!-- Mission Section -->
+      <div class="max-w-4xl mx-auto mb-16">
+        <div class="bg-card border rounded-lg p-8">
+          <div class="flex items-start gap-4 mb-6">
+            <div class="bg-primary/10 p-3 rounded-lg">
+              <Target className="h-8 w-8 text-primary" />
+            </div>
+            <div>
+              <h2 class="text-2xl font-bold mb-3">Our Mission</h2>
+              <p class="text-muted-foreground leading-relaxed">
+                We believe every student deserves a clear path to graduation. Academic Planner combines 
+                artificial intelligence with academic planning best practices to help students create 
+                personalized, achievable degree plans that align with their goals and constraints.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Features Grid -->
+      <div class="max-w-6xl mx-auto mb-16">
+        <h2 class="text-3xl font-bold text-center mb-12">What Makes Us Different</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="bg-card border rounded-lg p-6">
+            <div class="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+              <Lightbulb className="h-6 w-6 text-primary" />
+            </div>
+            <h3 class="text-xl font-semibold mb-3">Intelligent Planning</h3>
+            <p class="text-muted-foreground">
+              Our AI understands prerequisites, credit requirements, and career pathways to create 
+              optimal semester schedules.
+            </p>
+          </div>
+
+          <div class="bg-card border rounded-lg p-6">
+            <div class="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+              <Users className="h-6 w-6 text-primary" />
+            </div>
+            <h3 class="text-xl font-semibold mb-3">Student-Centered</h3>
+            <p class="text-muted-foreground">
+              Designed with real student needs in mind—flexible constraints, career focus, and 
+              easy customization.
+            </p>
+          </div>
+
+          <div class="bg-card border rounded-lg p-6">
+            <div class="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+              <GraduationCap className="h-6 w-6 text-primary" />
+            </div>
+            <h3 class="text-xl font-semibold mb-3">Graduation Focused</h3>
+            <p class="text-muted-foreground">
+              Every plan is designed to help you graduate on time while pursuing your academic 
+              and career goals.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- How We Help Section -->
+      <div class="max-w-4xl mx-auto mb-16">
+        <h2 class="text-3xl font-bold text-center mb-12">How We Help You Succeed</h2>
+        <div class="space-y-6">
+          <div class="bg-card border rounded-lg p-6">
+            <h3 class="text-xl font-semibold mb-3">Smart Prerequisite Management</h3>
+            <p class="text-muted-foreground">
+              Our system automatically tracks and arranges courses to ensure prerequisites are 
+              completed before advanced coursework, preventing scheduling conflicts and delays.
+            </p>
+          </div>
+
+          <div class="bg-card border rounded-lg p-6">
+            <h3 class="text-xl font-semibold mb-3">Career-Aligned Course Selection</h3>
+            <p class="text-muted-foreground">
+              When you specify your desired career, our AI suggests electives and specializations 
+              that align with industry demands and career pathways.
+            </p>
+          </div>
+
+          <div class="bg-card border rounded-lg p-6">
+            <h3 class="text-xl font-semibold mb-3">Flexible Workload Management</h3>
+            <p class="text-muted-foreground">
+              Set different credit hour limits for different semesters, include summer terms, 
+              and adjust your pace to match your personal circumstances.
+            </p>
+          </div>
+
+          <div class="bg-card border rounded-lg p-6">
+            <h3 class="text-xl font-semibold mb-3">Easy Plan Modifications</h3>
+            <p class="text-muted-foreground">
+              Life changes and so can your plan. Swap courses, move classes between semesters, 
+              and recalculate your entire schedule with a single click.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Technology Section -->
+      <div class="max-w-4xl mx-auto mb-16">
+        <div class="bg-card border rounded-lg p-8">
+          <h2 class="text-2xl font-bold mb-4">The Technology Behind the Planning</h2>
+          <p class="text-muted-foreground leading-relaxed mb-4">
+            Academic Planner uses advanced AI algorithms to analyze thousands of possible course 
+            combinations and schedule arrangements. Our system considers:
+          </p>
+          <ul class="space-y-2 text-muted-foreground ml-6">
+            <li class="flex items-start gap-2">
+              <span class="text-primary mt-1">•</span>
+              <span>Major and minor requirements from university catalogs</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-primary mt-1">•</span>
+              <span>Course prerequisites and co-requisites</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-primary mt-1">•</span>
+              <span>Credit hour distribution and workload balance</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-primary mt-1">•</span>
+              <span>Career pathway recommendations</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-primary mt-1">•</span>
+              <span>Your personal constraints and preferences</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="text-center max-w-2xl mx-auto">
+        <h2 class="text-3xl font-bold mb-4">Ready to Plan Your Success?</h2>
+        <p class="text-lg text-muted-foreground mb-8">
+          Join students who are using Academic Planner to navigate their university experience
+        </p>
+        <div class="flex gap-4 justify-center">
+          <a href={`${baseUrl}/planner`}>
+            <Button size="lg" className="text-lg px-8">
+              Start Planning
+            </Button>
+          </a>
+          <a href={`${baseUrl}/faq`}>
+            <Button size="lg" variant="outline" className="text-lg px-8">
+              View FAQ
+            </Button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</MainLayout>
+
