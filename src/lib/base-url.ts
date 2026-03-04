@@ -1,2 +1,5 @@
-export const API_BASE = 'https://uncw-planner-backend.onrender.com';
+export const baseUrl = '/'; // used by Navigation.tsx
+
+// Backend endpoints
+export const API_BASE = 'https://uncw-planner-backend.onrender.com'\;
 export const PLAN_ENDPOINT = `${API_BASE}/plan`;
