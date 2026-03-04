@@ -21,16 +21,16 @@ export default function Navigation() {
             <a href={baseUrl || '/'} className="text-sm font-medium hover:text-primary transition-colors">
               Home
             </a>
-            <a href={`${baseUrl}/planner`} className="text-sm font-medium hover:text-primary transition-colors">
+            <a href={`${baseUrl}planner`} className="text-sm font-medium hover:text-primary transition-colors">
               Planner
             </a>
-            <a href={`${baseUrl}/about`} className="text-sm font-medium hover:text-primary transition-colors">
+            <a href={`${baseUrl}about`} className="text-sm font-medium hover:text-primary transition-colors">
               About
             </a>
-            <a href={`${baseUrl}/faq`} className="text-sm font-medium hover:text-primary transition-colors">
+            <a href={`${baseUrl}faq`} className="text-sm font-medium hover:text-primary transition-colors">
               FAQ
             </a>
-            <a href={`${baseUrl}/planner`}>
+            <a href={`${baseUrl}planner`}>
               <Button>Get Started</Button>
             </a>
           </div>
@@ -55,24 +55,24 @@ export default function Navigation() {
               Home
             </a>
             <a
-              href={`${baseUrl}/planner`}
+              href={`${baseUrl}planner`}
               className="block py-2 text-sm font-medium hover:text-primary transition-colors"
             >
               Planner
             </a>
             <a
-              href={`${baseUrl}/about`}
+              href={`${baseUrl}about`}
               className="block py-2 text-sm font-medium hover:text-primary transition-colors"
             >
               About
             </a>
             <a
-              href={`${baseUrl}/faq`}
+              href={`${baseUrl}faq`}
               className="block py-2 text-sm font-medium hover:text-primary transition-colors"
             >
               FAQ
             </a>
-            <a href={`${baseUrl}/planner`}>
+            <a href={`${baseUrl}planner`}>
               <Button className="w-full">Get Started</Button>
             </a>
           </div>

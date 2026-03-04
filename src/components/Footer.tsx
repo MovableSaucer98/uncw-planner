@@ -27,17 +27,17 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href={`${baseUrl}/planner`} className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                <a href={`${baseUrl}planner`} className="text-sm text-muted-foreground hover:text-primary transition-colors">
                   Planner
                 </a>
               </li>
               <li>
-                <a href={`${baseUrl}/about`} className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                <a href={`${baseUrl}about`} className="text-sm text-muted-foreground hover:text-primary transition-colors">
                   About
                 </a>
               </li>
               <li>
-                <a href={`${baseUrl}/faq`} className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                <a href={`${baseUrl}faq`} className="text-sm text-muted-foreground hover:text-primary transition-colors">
                   FAQ
                 </a>
               </li>
