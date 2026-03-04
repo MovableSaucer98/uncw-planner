@@ -1,8 +1,18 @@
+# Dependencies & build
 node_modules/
 dist/
+
+# Environments
 .env
 .env.*
+
+# OS/editor
 .DS_Store
 
-# ignore system detritus
+# App Gen / filesystem noise
 lost+found/
+
+# Python backend (if present)
+__pycache__/
+*.pyc
+.venv/
