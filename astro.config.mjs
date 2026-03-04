@@ -1,5 +1,5 @@
 import {defineConfig} from 'astro/config';
-import cloudflare from '@astrojs/cloudflare';
+import netlify from '@astrojs/netlify';
 import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
 
@@ -55,11 +55,7 @@ export default defineConfig({
     host: true, // Listen on all network interfaces (0.0.0.0)
     strictPort: true,
   },
-  adapter: cloudflare({
-    platformProxy: {
-      enabled: false,
-    },
-  }),
+  adapter: netlify({ edge: false }),
   integrations: [
     react(),
     injectDevScript({scriptPath: '/generated/dev-only.js'}),
