@@ -10,7 +10,7 @@ import { Badge } from './ui/badge';
 import { ScrollArea } from './ui/scroll-area';
 import { Separator } from './ui/separator';
 import { Plus, X, Calendar, BookOpen, AlertCircle } from 'lucide-react';
-import { baseUrl } from '../lib/base-url';
+import { PLAN_ENDPOINT, baseUrl } from '../lib/base-url';
 
 import { generatePlan, type PlanRequest } from '../lib/plannerUtils';
 
@@ -73,7 +73,7 @@ export default function Planner() {
   const generateBasePlan = async () => {
     setIsGenerating(true);
     try {
-      const response = await fetch(`${baseUrl}/api/generate-plan`, {
+      const response = await fetch(PLAN_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
