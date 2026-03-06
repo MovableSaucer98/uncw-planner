@@ -123,8 +123,8 @@ export default function Planner() {
           <CardDescription>Configure your academic plan</CardDescription>
         </CardHeader>
         <CardContent className="p-0 flex min-h-0">
-          <ScrollArea className="flex-1 min-h-0 overflow-auto pb-24">
-            <div className="space-y-6 p-6">
+          <ScrollArea className="flex-1 min-h-0 overflow-auto">
+            <div className="space-y-6 p-6 pb-24">
             {/* Profile Section */}
             <div className="space-y-4">
               <h3 className="font-semibold text-lg flex items-center gap-2">
