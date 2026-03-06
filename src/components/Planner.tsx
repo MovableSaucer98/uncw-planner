@@ -117,13 +117,13 @@ export default function Planner() {
   return (
     <div className="flex flex-col lg:flex-row gap-6 h-[calc(100vh-120px)] p-6">
       {/* Left Panel - Controls */}
-      <Card className="w-full lg:w-[40%] overflow-hidden flex flex-col min-h-0">
+      <Card className="w-full lg:w-[40%] flex min-h-[100vh] flex-col overflow-hidden">
         <CardHeader className="pb-3">
           <CardTitle className="text-xl">Planning Controls</CardTitle>
           <CardDescription>Configure your academic plan</CardDescription>
         </CardHeader>
-        <ScrollArea className="flex-1">
-          <CardContent className="space-y-6">
+        <ScrollArea className="flex-1 min-h-0 overflow-auto">
+          <CardContent className="space-y-6 pb-24">
             {/* Profile Section */}
             <div className="space-y-4">
               <h3 className="font-semibold text-lg flex items-center gap-2">
@@ -304,7 +304,7 @@ export default function Planner() {
         </ScrollArea>
         
         {/* Action Buttons - Sticky Footer */}
-        <div className="mt-auto p-4 border-t bg-background sticky bottom-0 z-10">
+        <div className="mt-auto p-4 border-t bg-background sticky bottom-0 z-10 shadow-sm">
           <div className="space-y-2">
             <Button
               className="w-full"
@@ -592,6 +592,7 @@ export default function Planner() {
     </div>
   );
 }
+
 
 
 
