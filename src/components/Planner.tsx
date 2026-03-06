@@ -119,8 +119,42 @@ export default function Planner() {
       {/* Left Panel - Controls */}
       <Card className="w-full lg:w-[40%] relative flex flex-col h-full">
         <CardHeader className="pb-3">
-          <CardTitle className="text-xl">Planning Controls</CardTitle>
-          <CardDescription>Configure your academic plan</CardDescription>
+          <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+            {/* Left: Title & Description */}
+            <div className="space-y-1 lg:basis-1/2">
+              <CardTitle className="text-xl">Planning Controls</CardTitle>
+              <CardDescription>Configure your academic plan</CardDescription>
+            </div>
+            
+            {/* Right: Action Buttons */}
+            <div className="lg:basis-1/2 lg:pl-4">
+              <div className="space-y-2">
+                <Button
+                  className="w-full"
+                  onClick={generateBasePlan}
+                  disabled={isGenerating || !major}
+                >
+                  {isGenerating ? 'Generating...' : 'Generate Base Plan'}
+                </Button>
+                <Button
+                  variant="secondary"
+                  className="w-full"
+                  onClick={recalculatePlan}
+                  disabled={semesterPlans.length === 0}
+                >
+                  Recalculate
+                </Button>
+                <Button
+                  variant="outline"
+                  className="w-full"
+                  onClick={revertChanges}
+                  disabled={semesterPlans.length === 0}
+                >
+                  Revert Changes
+                </Button>
+              </div>
+            </div>
+          </div>
         </CardHeader>
         <CardContent className="p-0 flex min-h-0">
           <ScrollArea className="flex-1 min-h-0 overflow-auto">
@@ -304,35 +338,6 @@ export default function Planner() {
             </div>
         </ScrollArea>
         </CardContent>
-        
-        {/* Action Buttons - Sticky Footer */}
-        <div className="p-4 border-t bg-background sticky bottom-0 z-10 shadow-sm">
-          <div className="space-y-2">
-            <Button
-              className="w-full"
-              onClick={generateBasePlan}
-              disabled={isGenerating || !major}
-            >
-              {isGenerating ? 'Generating...' : 'Generate Base Plan'}
-            </Button>
-            <Button
-              variant="secondary"
-              className="w-full"
-              onClick={recalculatePlan}
-              disabled={semesterPlans.length === 0}
-            >
-              Recalculate
-            </Button>
-            <Button
-              variant="outline"
-              className="w-full"
-              onClick={revertChanges}
-              disabled={semesterPlans.length === 0}
-            >
-              Revert Changes
-            </Button>
-          </div>
-        </div>
       </Card>
 
       {/* Middle Panel - Course Details */}
