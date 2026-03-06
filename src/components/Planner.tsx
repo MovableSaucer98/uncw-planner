@@ -117,7 +117,7 @@ export default function Planner() {
   return (
     <div className="flex flex-col lg:flex-row gap-6 h-[calc(100vh-120px)] p-6">
       {/* Left Panel - Controls */}
-      <Card className="w-full lg:w-[40%] relative flex flex-col overflow-hidden h-full">
+      <Card className="w-full lg:w-[40%] relative flex flex-col h-full">
         <CardHeader className="pb-3">
           <CardTitle className="text-xl">Planning Controls</CardTitle>
           <CardDescription>Configure your academic plan</CardDescription>
@@ -306,7 +306,7 @@ export default function Planner() {
         </CardContent>
         
         {/* Action Buttons - Sticky Footer */}
-        <div className="mt-auto p-4 border-t bg-background sticky bottom-0 z-10 shadow-sm">
+        <div className="p-4 border-t bg-background sticky bottom-0 z-10 shadow-sm">
           <div className="space-y-2">
             <Button
               className="w-full"
