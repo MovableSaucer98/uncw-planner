@@ -10,7 +10,7 @@ import { Badge } from './ui/badge';
 import { ScrollArea } from './ui/scroll-area';
 import { Separator } from './ui/separator';
 import { Plus, X, Calendar, BookOpen, AlertCircle } from 'lucide-react';
-import { PLAN_ENDPOINT, baseUrl } from '../lib/base-url';
+import { baseUrl } from '../lib/base-url';
 
 import { generatePlan, type PlanRequest } from '../lib/plannerUtils';
 
@@ -73,7 +73,7 @@ export default function Planner() {
   const generateBasePlan = async () => {
     setIsGenerating(true);
     try {
-      const response = await fetch(PLAN_ENDPOINT, {
+      const response = await fetch(`${baseUrl}/api/generate-plan`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -115,9 +115,9 @@ export default function Planner() {
   const currentPlan = semesterPlans.find(plan => plan.semester === currentSemester);
 
   return (
-    <div className="grid grid-cols-12 gap-6 h-[calc(100vh-120px)] p-6">
+    <div className="flex flex-col lg:flex-row gap-6 h-[calc(100vh-120px)] p-6">
       {/* Left Panel - Controls */}
-      <Card className="col-span-3 overflow-hidden flex flex-col">
+      <Card className="w-full lg:w-[40%] overflow-hidden flex flex-col min-h-0">
         <CardHeader className="pb-3">
           <CardTitle className="text-xl">Planning Controls</CardTitle>
           <CardDescription>Configure your academic plan</CardDescription>
@@ -300,41 +300,41 @@ export default function Planner() {
                 </div>
               </TabsContent>
             </Tabs>
-
-            <Separator />
-
-            {/* Action Buttons */}
-            <div className="space-y-2">
-              <Button
-                className="w-full"
-                onClick={generateBasePlan}
-                disabled={isGenerating || !major}
-              >
-                {isGenerating ? 'Generating...' : 'Generate Base Plan'}
-              </Button>
-              <Button
-                variant="secondary"
-                className="w-full"
-                onClick={recalculatePlan}
-                disabled={semesterPlans.length === 0}
-              >
-                Recalculate
-              </Button>
-              <Button
-                variant="outline"
-                className="w-full"
-                onClick={revertChanges}
-                disabled={semesterPlans.length === 0}
-              >
-                Revert Changes
-              </Button>
-            </div>
           </CardContent>
         </ScrollArea>
+        
+        {/* Action Buttons - Sticky Footer */}
+        <div className="mt-auto p-4 border-t bg-background sticky bottom-0 z-10">
+          <div className="space-y-2">
+            <Button
+              className="w-full"
+              onClick={generateBasePlan}
+              disabled={isGenerating || !major}
+            >
+              {isGenerating ? 'Generating...' : 'Generate Base Plan'}
+            </Button>
+            <Button
+              variant="secondary"
+              className="w-full"
+              onClick={recalculatePlan}
+              disabled={semesterPlans.length === 0}
+            >
+              Recalculate
+            </Button>
+            <Button
+              variant="outline"
+              className="w-full"
+              onClick={revertChanges}
+              disabled={semesterPlans.length === 0}
+            >
+              Revert Changes
+            </Button>
+          </div>
+        </div>
       </Card>
 
       {/* Middle Panel - Course Details */}
-      <Card className="col-span-4 overflow-hidden flex flex-col">
+      <Card className="w-full lg:w-[30%] overflow-hidden flex flex-col min-h-0">
         <CardHeader className="pb-3">
           <CardTitle className="text-xl">Course Details</CardTitle>
           <CardDescription>
@@ -452,7 +452,7 @@ export default function Planner() {
       </Card>
 
       {/* Right Panel - Schedule */}
-      <Card className="col-span-5 overflow-hidden flex flex-col">
+      <Card className="w-full lg:w-[30%] overflow-hidden flex flex-col min-h-0">
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <div>
@@ -592,4 +592,6 @@ export default function Planner() {
     </div>
   );
 }
+
+
 
