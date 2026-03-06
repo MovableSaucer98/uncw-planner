@@ -117,7 +117,7 @@ export default function Planner() {
   return (
     <div className="flex flex-col lg:flex-row gap-6 h-[calc(100vh-120px)] p-6">
       {/* Left Panel - Controls */}
-      <Card className="w-full lg:w-[40%] flex min-h-[100vh] flex-col overflow-hidden">
+      <Card className="w-full lg:w-[40%] relative flex flex-col overflow-hidden h-full">
         <CardHeader className="pb-3">
           <CardTitle className="text-xl">Planning Controls</CardTitle>
           <CardDescription>Configure your academic plan</CardDescription>
@@ -592,6 +592,7 @@ export default function Planner() {
     </div>
   );
 }
+
 
 
 
