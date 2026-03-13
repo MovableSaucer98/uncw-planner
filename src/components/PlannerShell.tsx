@@ -1,3 +1,5 @@
+import { postPlan } from '../lib/planApi';
+import { buildPlanRequest } from '../lib/payload';
 import React, { useCallback, useMemo, useState } from "react";
 import ControlsPanel from "./panels/ControlsPanel";
 import DetailsPanel from "./panels/DetailsPanel";
@@ -122,4 +124,31 @@ export default function PlannerShell() {
       </section>
     </div>
   );
+}
+
+/** Auto-injected: Generate handler that builds payload and calls /plan */
+async function onGenerateClick() {
+  try {
+    // Optional: attach to component state if present
+    // @ts-ignore
+    typeof setLoading === 'function' && setLoading(true);
+
+    const payload = buildPlanRequest();
+    const data = await postPlan(payload);
+
+    // Expecting { terms[], recommendations?, explanations? }
+    // Map to your existing state shape
+    // @ts-ignore
+    typeof setPlanData === 'function' && setPlanData(data);
+
+    // @ts-ignore
+    typeof setError === 'function' && setError(null);
+  } catch (err) {
+    console.error(err);
+    // @ts-ignore
+    typeof setError === 'function' && setError(String(err));
+  } finally {
+    // @ts-ignore
+    typeof setLoading === 'function' && setLoading(false);
+  }
 }
