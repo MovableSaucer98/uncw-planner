@@ -1,15 +1,11 @@
 ---
-import MainLayout from '../layouts/main.astro';
-import PlannerComponent from '../components/Planner';
+import MainLayout from "../layouts/main.astro";
+import PlannerShell from "../components/PlannerShell";
 ---
 
-<MainLayout pageClass="planner-page">
-  <PlannerComponent client:only="react" />
+<MainLayout title="Planner · UNCW Planner">
+  <section class="container mx-auto py-8 px-4 space-y-4">
+    <h1 class="text-3xl font-semibold">Planner</h1>
+    <PlannerShell />
+  </section>
 </MainLayout>
-
-<style>
-  :global(.planner-page) {
-    background: hsl(var(--background));
-  }
-</style>
-
