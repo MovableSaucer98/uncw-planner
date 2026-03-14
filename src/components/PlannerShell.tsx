@@ -1,10 +1,10 @@
+import { PLAN_ENDPOINT } from '../lib/base-url';
 import { postPlan } from '../lib/planApi';
 import { buildPlanRequest } from '../lib/payload';
 import React, { useCallback, useMemo, useState } from "react";
 import ControlsPanel from "./panels/ControlsPanel";
 import DetailsPanel from "./panels/DetailsPanel";
 import SchedulePanel from "./panels/SchedulePanel";
-import { DEBUG_PLAN_ENDPOINT } from "../lib/base-url";
 
 export type GridSection = {
   id: string;
@@ -53,7 +53,7 @@ export default function PlannerShell() {
         summer_term: false,
         per_term_credit_caps: { default: 15 },
       };
-      const res = await fetch(DEBUG_PLAN_ENDPOINT, {
+      const res = await fetch(PLAN_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
